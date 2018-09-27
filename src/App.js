@@ -3,14 +3,13 @@ import Search from './components/Search';
 import ViewBuilding from './components/ViewBuilding';
 import BuildingList from './components/BuildingList';
 import Credit from './components/Credit';
+import AddListing from './components/AddListing';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      filterText: '',
-      selectedBuilding: 0
-    };
+  state = {
+    data: this.props.data,
+    filterText: '',
+    selectedBuilding: 0
   }
 
   filterUpdate(value) {
@@ -24,6 +23,25 @@ class App extends React.Component {
       selectedBuilding: id
     })
   }
+
+  deleteListing = (id) => {
+		let data = this.state.data.filter(building => {
+			return building.id !== id
+		});
+		this.setState({
+			data
+		});
+  }
+  
+  addListing = (building) => {
+    building.id = Math.random()*10;
+    let data = [...this.state.data, building];
+    this.setState({
+      data
+    });
+  }
+
+
 
   render() {
     console.log(this.state.filterText);
@@ -50,9 +68,10 @@ class App extends React.Component {
                     </tr>
                   </thead>
                   <BuildingList
-                    data={this.props.data}
+                    data={this.state.data}
                     filterText={this.state.filterText}
                     selectedUpdate={this.selectedUpdate.bind(this)}
+                    deleteListing={this.deleteListing}
                   /> 
                 </table>
               </div>
@@ -61,6 +80,9 @@ class App extends React.Component {
               <ViewBuilding 
               data={this.props.data}
               selectedBuildingId={this.state.selectedBuilding}
+              />
+              <AddListing 
+              addListing={this.addListing}
               />
             </div>
           </div>
