@@ -1,6 +1,5 @@
 import React from 'react';
-
-	const BuildingList = ({deleteListing, filterText, selectedUpdate, data }) => {
+	const BuildingList = ({deleteListing, filterText, selectedUpdate, data}) => {
 
 	const buildingList = data.filter(directory =>{
 		return directory.name.toLowerCase().indexOf(filterText.toLowerCase()) >= 0
@@ -15,8 +14,6 @@ import React from 'react';
 			</tr>
 		);
 	});
-
 	return <tbody>{buildingList}</tbody>;
 	}
-
 export default BuildingList;
